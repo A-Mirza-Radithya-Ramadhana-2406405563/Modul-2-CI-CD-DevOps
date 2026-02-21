@@ -82,7 +82,7 @@ tasks.withType<Test>().configureEach {
 
 sonar {
     properties {
-        property("sonar.projectKey", "a-mirza-radithya-ramadhana-2406405563")
+        property("sonar.projectKey", "A-Mirza-Radithya-Ramadhana-2406405563_Modul-2-CI-CD-DevOps")
         property("sonar.organization", "a-mirza-radithya-ramadhana-2406405563")
         property("sonar.sources", "src/main/java")
         property("sonar.tests", "src/test/java")
