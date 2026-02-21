@@ -89,3 +89,12 @@ sonar {
         property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
+
+tasks.named<JacocoReport>("jacocoTestReport") {
+    dependsOn(tasks.named("test"))
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+}
