@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CreateProductFunctionalTest extends BaseFunctionalTest {
     @Test
-    void createProductFlow_isCorrect(ChromeDriver driver) throws Exception {
+    void createProductFlow_isCorrect(ChromeDriver driver) {
         String url = baseUrl + "/product/create";
         driver.get(url);
 

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class DeleteProductFunctionalTest extends BaseFunctionalTest {
     @Test
-    void deleteProductFlow_isCorrect(ChromeDriver driver) throws Exception {
+    void deleteProductFlow_isCorrect(ChromeDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         String createUrl = baseUrl + "/product/create";
