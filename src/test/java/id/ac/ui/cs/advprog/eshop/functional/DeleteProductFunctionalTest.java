@@ -11,7 +11,7 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class DeleteProductFunctionalTest extends BaseFunctionalTest {
+class DeleteProductFunctionalTest extends BaseFunctionalTest {
     @Test
     void deleteProductFlow_isCorrect(ChromeDriver driver) throws Exception {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));

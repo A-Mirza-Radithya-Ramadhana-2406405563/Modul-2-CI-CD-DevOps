@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class HomePageFunctionalTest extends BaseFunctionalTest {
+class HomePageFunctionalTest extends BaseFunctionalTest {
     @Test
     void pageTitle_isCorrect(ChromeDriver driver) throws Exception {
         driver.get(baseUrl);
