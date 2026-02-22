@@ -26,3 +26,15 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    name: Deploy to Koyeb
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Trigger Koyeb Deploy
+        run: |
+          curl -X POST https://app.koyeb.com/v1/services/242b82d3-acb3-46b4-93f5-e3e1c9f71437/deploy \
+          -H "Authorization: Bearer ${{ secrets.KOYEB_API_TOKEN }}"
