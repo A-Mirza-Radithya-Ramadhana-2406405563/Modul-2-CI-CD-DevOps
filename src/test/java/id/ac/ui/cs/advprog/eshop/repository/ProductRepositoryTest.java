@@ -7,20 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ProductRepositoryTest {
+class ProductRepositoryTest {
     @InjectMocks
     ProductRepository productRepository;
-    @BeforeEach
-    public void setUp() {
-
-    }
 
     @Test
     void testCreateAndFind() {
@@ -123,9 +118,10 @@ public class ProductRepositoryTest {
         productRepository.create(product);
         assertEquals(product, productRepository.findById(product.getProductId()));
         productRepository.delete(product.getProductId());
-        assertThrows(ProductNotFoundException.class, () -> {
-            productRepository.findById(product.getProductId());
-        });
+        String id = product.getProductId();
+        assertThrows(ProductNotFoundException.class, () ->
+                productRepository.findById(id)
+        );
     }
 
     @Test

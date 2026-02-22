@@ -7,9 +7,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EditProductFunctionalTest extends BaseFunctionalTest {
+class EditProductFunctionalTest extends BaseFunctionalTest {
     @Test
-    void editProductFlow_isCorrect(ChromeDriver driver) throws Exception {
+    void editProductFlow_isCorrect(ChromeDriver driver) {
         String createUrl = baseUrl + "/product/create";
         driver.get(createUrl);
 
