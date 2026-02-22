@@ -118,9 +118,10 @@ class ProductRepositoryTest {
         productRepository.create(product);
         assertEquals(product, productRepository.findById(product.getProductId()));
         productRepository.delete(product.getProductId());
-        assertThrows(ProductNotFoundException.class, () -> {
-            productRepository.findById(product.getProductId());
-        });
+        String id = product.getProductId();
+        assertThrows(ProductNotFoundException.class, () ->
+                productRepository.findById(id)
+        );
     }
 
     @Test
