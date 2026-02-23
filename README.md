@@ -1,6 +1,7 @@
 ## Name: Mirza Radithya Ramadhana
 ## NPM: 2406405563
 ## Class: Pemrograman Lanjut A
+## Deployment Link: https://thick-sandy-jaatzy-a8125cce.koyeb.app/
 
 ---
 
