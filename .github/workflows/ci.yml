@@ -34,7 +34,13 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Trigger Koyeb Deploy
-        run: |
-          curl -X POST https://app.koyeb.com/v1/services/242b82d3-acb3-46b4-93f5-e3e1c9f71437/deploy \
-          -H "Authorization: Bearer ${{ secrets.KOYEB_API_TOKEN }}"
+      - uses: actions/checkout@v4
+
+      - name: Install Koyeb CLI
+        run: curl -fsSL https://cli.koyeb.com/install.sh | sh
+
+      - name: Login to Koyeb
+        run: koyeb auth login --token ${{ secrets.KOYEB_API_TOKEN }}
+
+      - name: Redeploy service
+        run: koyeb service redeploy modul-2-ci-cd-devops
