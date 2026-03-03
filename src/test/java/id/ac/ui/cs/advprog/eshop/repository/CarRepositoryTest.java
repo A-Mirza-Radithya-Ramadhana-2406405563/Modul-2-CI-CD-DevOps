@@ -36,6 +36,24 @@ public class CarRepositoryTest {
     }
 
     @Test
+    void testCreateWithoutId() {
+        Car car = new Car();
+        car.setCarName("Sedan Cap Bambang");
+        car.setCarColor("ungu");
+        car.setCarQuantity(1);
+        assertNull(car.getCarId());
+        carRepository.createCar(car);
+
+        Iterator<Car> carIterator = carRepository.findAll();
+        assertTrue(carIterator.hasNext());
+        Car savedcar = carIterator.next();
+        assertNotNull(savedcar.getCarId());
+        assertEquals(car.getCarName(), savedcar.getCarName());
+        assertEquals(car.getCarColor(), savedcar.getCarColor());
+        assertEquals(car.getCarQuantity(), savedcar.getCarQuantity());
+    }
+
+    @Test
     void testFindAllIfEmpty() {
         Iterator<Car> carIterator = carRepository.findAll();
         assertFalse(carIterator.hasNext());
@@ -126,9 +144,15 @@ public class CarRepositoryTest {
         carRepository.createCar(car);
         assertEquals(car, carRepository.findById(car.getCarId()));
         carRepository.delete(car.getCarId());
-        String id = car.getCarId();
         assertThrows(CarNotFoundException.class, () -> {
             carRepository.findById("NO_ID");
+        });
+    }
+
+    @Test
+    void testDeleteCarIfCarDoesNotExist() {
+        assertThrows(CarNotFoundException.class, () -> {
+            carRepository.delete("NO_ID");
         });
     }
 }
