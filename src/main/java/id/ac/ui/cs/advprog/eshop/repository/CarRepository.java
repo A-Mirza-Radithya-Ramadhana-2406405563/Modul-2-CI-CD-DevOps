@@ -14,12 +14,16 @@ public class CarRepository {
     private List<Car> carData = new ArrayList<>();
 
     public Car createCar(Car car) {
+        setCarId(car);
+        carData.add(car);
+        return car;
+    }
+
+    private void setCarId(Car car) {
         if (car.getCarId() == null) {
             UUID uuid = UUID.randomUUID();
             car.setCarId(uuid.toString());
         }
-        carData.add(car);
-        return car;
     }
 
     public Iterator<Car> findAll() {
