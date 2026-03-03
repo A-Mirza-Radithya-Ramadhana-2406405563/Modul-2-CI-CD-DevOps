@@ -9,36 +9,10 @@ import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class ProductRepository {
-    private List<Product> productData = new ArrayList<>();
-
-    public Product create(Product product) {
-        productData.add(product);
-        return product;
-    }
-
-    public Iterator<Product> findAll() {
-        return productData.iterator();
-    }
-
-    public Product findById(String productId) {
-        return productData.stream()
-                .filter(product -> product.getProductId().equals(productId))
-                .findFirst()
-                .orElseThrow(() -> new ProductNotFoundException(productId));
-    }
-
-    public Product edit(String productId, Product editedProduct) {
-        Product product = findById(productId);
-
-        product.setProductName(editedProduct.getProductName());
-        product.setProductQuantity(editedProduct.getProductQuantity());
-
-        return product;
-    }
-
-    public void delete(String productId) {
-        Product product = findById(productId);
-        productData.remove(product);
-    }
+public interface ProductRepository {
+    public Product create(Product product);
+    public Iterator<Product> findAll();
+    public Product findById(String productId);
+    public Product edit(String productId, Product editedProduct);
+    public void delete(String productId);
 }
