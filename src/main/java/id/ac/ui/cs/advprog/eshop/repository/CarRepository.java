@@ -9,45 +9,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class CarRepository {
-    private List<Car> carData = new ArrayList<>();
-
-    public Car createCar(Car car) {
-        setCarId(car);
-        carData.add(car);
-        return car;
-    }
-
-    private void setCarId(Car car) {
-        if (car.getCarId() == null) {
-            UUID uuid = UUID.randomUUID();
-            car.setCarId(uuid.toString());
-        }
-    }
-
-    public Iterator<Car> findAll() {
-        return carData.iterator();
-    }
-
-    public Car findById(String id) {
-        return carData.stream()
-                .filter(car -> car.getCarId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new CarNotFoundException(id));
-    }
-
-    public Car update(String id, Car updatedCar) {
-        Car car = findById(id);
-        car.setCarName(updatedCar.getCarName());
-        car.setCarColor(updatedCar.getCarColor());
-        car.setCarQuantity(updatedCar.getCarQuantity());
-        return car;
-    }
-
-    public void delete(String id) {
-        boolean removed = carData.removeIf(car -> car.getCarId().equals(id));
-        if (!removed) {
-            throw new CarNotFoundException(id);
-        }
-    }
+public interface CarRepository {
+    public Car createCar(Car car);
+    public Iterator<Car> findAll();
+    public Car findById(String id);
+    public Car update(String id, Car updatedCar);
+    public void delete(String id);
 }
