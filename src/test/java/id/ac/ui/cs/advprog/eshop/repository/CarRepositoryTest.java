@@ -1,22 +1,21 @@
 package id.ac.ui.cs.advprog.eshop.repository;
 
+import id.ac.ui.cs.advprog.eshop.exception.CarNotFoundException;
 import id.ac.ui.cs.advprog.eshop.model.Car;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Iterator;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
 public class CarRepositoryTest {
-    @InjectMocks
-    CarRepository carRepository;
+    private InMemoryCarRepository carRepository;
+
+    @BeforeEach
+    void setUp() {
+        carRepository = new InMemoryCarRepository();
+    }
 
     @Test
     void testCreateAndFind() {
@@ -31,6 +30,24 @@ public class CarRepositoryTest {
         assertTrue(carIterator.hasNext());
         Car savedcar = carIterator.next();
         assertEquals(car.getCarId(), savedcar.getCarId());
+        assertEquals(car.getCarName(), savedcar.getCarName());
+        assertEquals(car.getCarColor(), savedcar.getCarColor());
+        assertEquals(car.getCarQuantity(), savedcar.getCarQuantity());
+    }
+
+    @Test
+    void testCreateWithoutId() {
+        Car car = new Car();
+        car.setCarName("Sedan Cap Bambang");
+        car.setCarColor("ungu");
+        car.setCarQuantity(1);
+        assertNull(car.getCarId());
+        carRepository.createCar(car);
+
+        Iterator<Car> carIterator = carRepository.findAll();
+        assertTrue(carIterator.hasNext());
+        Car savedcar = carIterator.next();
+        assertNotNull(savedcar.getCarId());
         assertEquals(car.getCarName(), savedcar.getCarName());
         assertEquals(car.getCarColor(), savedcar.getCarColor());
         assertEquals(car.getCarQuantity(), savedcar.getCarQuantity());
@@ -82,7 +99,9 @@ public class CarRepositoryTest {
 
     @Test
     void testFindByIdIfCarDoesNotExist() {
-        assertNull(carRepository.findById("NO_ID"));
+        assertThrows(CarNotFoundException.class, () -> {
+            carRepository.findById("NO_ID");
+        });
     }
 
     @Test
@@ -111,7 +130,9 @@ public class CarRepositoryTest {
         Car editedCar = new Car();
         editedCar.setCarName("Sedan Cap");
         editedCar.setCarQuantity(50);
-        assertNull(carRepository.update("NO_ID", editedCar));
+        assertThrows(CarNotFoundException.class, () -> {
+            carRepository.update("NO_ID", editedCar);
+        });
     }
 
     @Test
@@ -123,7 +144,15 @@ public class CarRepositoryTest {
         carRepository.createCar(car);
         assertEquals(car, carRepository.findById(car.getCarId()));
         carRepository.delete(car.getCarId());
-        String id = car.getCarId();
-        assertNull(carRepository.findById(id));
+        assertThrows(CarNotFoundException.class, () -> {
+            carRepository.findById("NO_ID");
+        });
+    }
+
+    @Test
+    void testDeleteCarIfCarDoesNotExist() {
+        assertThrows(CarNotFoundException.class, () -> {
+            carRepository.delete("NO_ID");
+        });
     }
 }
